@@ -86,6 +86,7 @@ type BlockWriterOptions struct {
 	interceptor         BlockInterceptor
 	mainTrackNumber     uint64
 	maxKeyframeInterval int64
+	timecodeOffset      uint64
 }
 
 // WithEBMLHeader sets EBML header.
@@ -138,6 +139,14 @@ func WithMaxKeyframeInterval(mainTrackNumber uint64, interval int64) BlockWriter
 		}
 		o.mainTrackNumber = mainTrackNumber
 		o.maxKeyframeInterval = interval
+		return nil
+	}
+}
+
+// WithTimecodeOffset sets the timecode offset of the option.
+func WithTimecodeOffset(timecodeOffset uint64) BlockWriterOptionFn {
+	return func(o *BlockWriterOptions) error {
+		o.timecodeOffset = timecodeOffset
 		return nil
 	}
 }

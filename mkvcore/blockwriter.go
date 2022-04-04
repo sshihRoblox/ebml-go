@@ -171,7 +171,7 @@ func NewSimpleBlockWriter(w0 io.WriteCloser, tracks []TrackDescription, opts ...
 				Cluster simpleBlockCluster `ebml:"Cluster,size=unknown"`
 			}{
 				Cluster: simpleBlockCluster{
-					Timecode: uint64(lastTc - tc0),
+					Timecode: uint64(lastTc-tc0) + options.timecodeOffset,
 					PrevSize: uint64(w.Size()),
 				},
 			}
@@ -204,7 +204,7 @@ func NewSimpleBlockWriter(w0 io.WriteCloser, tracks []TrackDescription, opts ...
 						Cluster simpleBlockCluster `ebml:"Cluster,size=unknown"`
 					}{
 						Cluster: simpleBlockCluster{
-							Timecode: uint64(tc1 - tc0),
+							Timecode: uint64(tc1-tc0) + options.timecodeOffset,
 							PrevSize: uint64(w.Size()),
 						},
 					}
