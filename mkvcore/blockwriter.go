@@ -171,7 +171,7 @@ func NewSimpleBlockWriter(w0 io.WriteCloser, tracks []TrackDescription, opts ...
 				Cluster simpleBlockCluster `ebml:"Cluster,size=unknown"`
 			}{
 				Cluster: simpleBlockCluster{
-					Timecode: uint64(lastTc-tc0) + options.timecodeOffset,
+					Timecode: uint64(lastTc - tc0),
 					PrevSize: uint64(w.Size()),
 				},
 			}
@@ -191,8 +191,13 @@ func NewSimpleBlockWriter(w0 io.WriteCloser, tracks []TrackDescription, opts ...
 				break L_WRITE
 			case f := <-ch:
 				if tc0 == invalidTimestamp {
-					tc0 = f.timestamp
+					if options.skipFirstPacketTimeShift {
+						tc0 = 0
+					} else {
+						tc0 = f.timestamp
+					}
 				}
+
 				lastTc = f.timestamp
 				tc := f.timestamp - tc1
 				if tc1 == invalidTimestamp || tc >= 0x7FFF || (f.trackNumber == options.mainTrackNumber && tc >= tNextCluster && f.keyframe) {
@@ -204,7 +209,7 @@ func NewSimpleBlockWriter(w0 io.WriteCloser, tracks []TrackDescription, opts ...
 						Cluster simpleBlockCluster `ebml:"Cluster,size=unknown"`
 					}{
 						Cluster: simpleBlockCluster{
-							Timecode: uint64(tc1-tc0) + options.timecodeOffset,
+							Timecode: uint64(tc1 - tc0),
 							PrevSize: uint64(w.Size()),
 						},
 					}

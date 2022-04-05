@@ -79,14 +79,14 @@ func (o BlockWriterOptionFn) ApplyToBlockWriterOptions(opts *BlockWriterOptions)
 // BlockWriterOptions stores options for BlockWriter.
 type BlockWriterOptions struct {
 	BlockReadWriterOptions
-	ebmlHeader          interface{}
-	segmentInfo         interface{}
-	seekHead            bool
-	marshalOpts         []ebml.MarshalOption
-	interceptor         BlockInterceptor
-	mainTrackNumber     uint64
-	maxKeyframeInterval int64
-	timecodeOffset      uint64
+	ebmlHeader               interface{}
+	segmentInfo              interface{}
+	seekHead                 bool
+	marshalOpts              []ebml.MarshalOption
+	interceptor              BlockInterceptor
+	mainTrackNumber          uint64
+	maxKeyframeInterval      int64
+	skipFirstPacketTimeShift bool
 }
 
 // WithEBMLHeader sets EBML header.
@@ -143,10 +143,10 @@ func WithMaxKeyframeInterval(mainTrackNumber uint64, interval int64) BlockWriter
 	}
 }
 
-// WithTimecodeOffset sets the timecode offset of the option.
-func WithTimecodeOffset(timecodeOffset uint64) BlockWriterOptionFn {
+// WithNoFirstPacketTimeShift will not shift the first received packet's time to 0
+func WithNoFirtPacketTimeShift() BlockWriterOptionFn {
 	return func(o *BlockWriterOptions) error {
-		o.timecodeOffset = timecodeOffset
+		o.skipFirstPacketTimeShift = true
 		return nil
 	}
 }
