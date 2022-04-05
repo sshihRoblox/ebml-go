@@ -17,7 +17,7 @@ package mkvcore
 import (
 	"io"
 
-	"github.com/at-wat/ebml-go"
+	"github.com/sshihRoblox/ebml-go"
 )
 
 type blockReader struct {

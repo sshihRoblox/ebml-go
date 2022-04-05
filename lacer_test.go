@@ -19,7 +19,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/at-wat/ebml-go/internal/errs"
+	"github.com/sshihRoblox/ebml-go/internal/errs"
 )
 
 func TestLacer(t *testing.T) {

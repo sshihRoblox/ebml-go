@@ -19,7 +19,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/at-wat/ebml-go"
+	"github.com/sshihRoblox/ebml-go"
 )
 
 // ErrIgnoreOldFrame means that a frame has too old timestamp and ignored.

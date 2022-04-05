@@ -15,7 +15,7 @@
 package mkvcore
 
 import (
-	"github.com/at-wat/ebml-go"
+	"github.com/sshihRoblox/ebml-go"
 )
 
 type simpleBlockGroup struct {
