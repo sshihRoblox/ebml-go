@@ -144,7 +144,7 @@ func WithMaxKeyframeInterval(mainTrackNumber uint64, interval int64) BlockWriter
 }
 
 // WithNoFirstPacketTimeShift will not shift the first received packet's time to 0
-func WithNoFirtPacketTimeShift() BlockWriterOptionFn {
+func WithNoFirstPacketTimeShift() BlockWriterOptionFn {
 	return func(o *BlockWriterOptions) error {
 		o.skipFirstPacketTimeShift = true
 		return nil
