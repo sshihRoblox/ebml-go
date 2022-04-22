@@ -87,6 +87,7 @@ type BlockWriterOptions struct {
 	mainTrackNumber          uint64
 	maxKeyframeInterval      int64
 	skipFirstPacketTimeShift bool
+	clusterTime              uint64
 }
 
 // WithEBMLHeader sets EBML header.
@@ -147,6 +148,14 @@ func WithMaxKeyframeInterval(mainTrackNumber uint64, interval int64) BlockWriter
 func WithNoFirstPacketTimeShift() BlockWriterOptionFn {
 	return func(o *BlockWriterOptions) error {
 		o.skipFirstPacketTimeShift = true
+		return nil
+	}
+}
+
+// WithClusterTime forces the cluster time to be clusterTime in milliseconds
+func WithClusterTime(clusterTime uint64) BlockWriterOptionFn {
+	return func(o *BlockWriterOptions) error {
+		o.clusterTime = clusterTime
 		return nil
 	}
 }

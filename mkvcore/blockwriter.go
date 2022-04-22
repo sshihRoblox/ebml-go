@@ -204,12 +204,16 @@ func NewSimpleBlockWriter(w0 io.WriteCloser, tracks []TrackDescription, opts ...
 					// Create new Cluster
 					tc1 = f.timestamp
 					tc = 0
+					clusterTc := uint64(tc1 - tc0)
+					if options.clusterTime != ^uint64(0) {
+						clusterTc = options.clusterTime
+					}
 
 					cluster := struct {
 						Cluster simpleBlockCluster `ebml:"Cluster,size=unknown"`
 					}{
 						Cluster: simpleBlockCluster{
-							Timecode: uint64(tc1 - tc0),
+							Timecode: clusterTc,
 							PrevSize: uint64(w.Size()),
 						},
 					}
